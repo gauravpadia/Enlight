@@ -13,7 +13,7 @@
  *
  * @category   Enlight
  * @package    Enlight_ExtJs
- * @copyright  Copyright (c) 2011, shopware AG (http://www.shopware.de)
+ * @copyright  Copyright (c) 2012, shopware AG (http://www.shopware.de)
  * @license    http://enlight.de/license     New BSD License
  * @version    $Id$
  * @author     Stephan P.

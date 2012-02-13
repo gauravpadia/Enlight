@@ -1,5 +1,5 @@
 /**
- * Enlight
+ * Enlight ExtJS
  *
  * LICENSE
  *
@@ -13,10 +13,12 @@
  *
  * @category   Enlight
  * @package    Enlight_ExtJs
- * @copyright  Copyright (c) 2011, shopware AG (http://www.shopware.de)
+ * @copyright  Copyright (c) 2012, Mitchell Simoens <mitchell.simoens@sencha.com>
+ * @copyright  Copyright (c) 2012, shopware AG (http://www.shopware.de)
  * @license    http://enlight.de/license     New BSD License
  * @version    $Id$
- * @author     Stephan P.
+ * @link       http://github.com/mitchellsimoens/SubAppDemo/
+ * @author     Mitchell Simoens <mitchell.simoens@sencha.com>
  * @author     Heiner Lohaus
  * @author     $Author$
  */
@@ -25,9 +27,10 @@
  * Override the default ext application
  * to add our sub application functionality
  *
+ * {@link http://github.com/mitchellsimoens/SubAppDemo/}
+ *
  * @category   Enlight
  * @package    Enlight_ExtJs
- * @copyright  Copyright (c) 2011, shopware AG (http://www.shopware.de)
  * @license    http://enlight.de/license     New BSD License
  */
 Ext.define('Enlight.app.SubApplication', {
@@ -42,17 +45,17 @@ Ext.define('Enlight.app.SubApplication', {
     ],
 
     /**
-      * @cfg {Ext.app.Application} app Reference to the global Ext.app.Application instance
+      * @cfg { Ext.app.Application } app Reference to the global Ext.app.Application instance
       */
     /**
-      * @cfg {String} id ID of the SubApplication.
+      * @cfg { String } id ID of the SubApplication.
       */
 
     /**
-      * @cfg {Array} controllers Array of Controller names to create.
+      * @cfg { Array } controllers Array of Controller names to create.
       */
     /**
-      * @cfg {Object} dependencies Object holding Arrays for CSS and JS files to load.
+      * @cfg { Object } dependencies Object holding Arrays for CSS and JS files to load.
       * JS files will automatically be destroyed once all JS files are loaded.
       * CSS files will be automatically destroyed when SubApplication is destroyed
       */
@@ -61,26 +64,33 @@ Ext.define('Enlight.app.SubApplication', {
         js  : []
     },
     /**
-      * @cfg {Boolean/Ext.LoadMask} loadMask true to use a Ext.LoadMask while loading dependencies.
+      * @cfg { Boolean/Ext.LoadMask } loadMask true to use a Ext.LoadMask while loading dependencies.
       * Can also accept a config Object of Ext.LoadMask
       */
     loadMask          : true,
+
     /**
-      * @cfg {String} loadingCls CSS name(s) to apply to the message div of Ext.LoadMask
+     * @cfg { Integer } Delay in milliseconds when the loading mask will automatically closed to
+     * continue the work in the backend, even when an runtime error is raised.
+     */
+    loadDelay         : 2500,
+    /**
+      * @cfg { String } loadingCls CSS name(s) to apply to the message div of Ext.LoadMask
       */
     loadingCls        : '',
     /**
-      * @cfg {String} loadingText Text to show in the Ext.LoadMask
+      * @cfg { String } loadingText Text to show in the Ext.LoadMask
       */
-    loadingText       : 'Loading...',
+    loadingText       : 'Laden ...',
     /**
-      * @cfg {Boolean} loadingUseMsg true to show a message in the Ext.LoadMask
+      * @cfg { Boolean } loadingUseMsg true to show a message in the Ext.LoadMask
       */
     loadingUseMsg     : true,
     /**
-      * @cfg {Number}removeJSFileDelay Time in milliseconds to delay destroying JS files after all have been loaded
+      * @cfg { Number } removeJSFileDelay Time in milliseconds to delay destroying JS files after all have been loaded
       */
     removeJSFileDelay : 100,
+
 
     scope             : undefined,
 
@@ -97,7 +107,7 @@ Ext.define('Enlight.app.SubApplication', {
        * NOTE: Return the main view as SubApplication will listen for it's destroy event to destroy the SubApplication.
        * @property launch
        * @type Function
-       * @return {Ext.Component} Return the main view as SubApplication will listen for it's destroy event to destroy
+       * @return { Ext.Component } Return the main view as SubApplication will listen for it's destroy event to destroy
        * the SubApplication.
        */
     launch       : Ext.emptyFn,
@@ -124,15 +134,15 @@ Ext.define('Enlight.app.SubApplication', {
             loadedCSS    : Ext.create('Ext.util.MixedCollection')
         });
 
+        me.callParent(arguments);
+
         if(this.name === undefined) {
             this.name = Ext.getClassName(this);
         }
 
         if(this.loadPath !== undefined) {
-            Ext.Loader.setPath(this.name, this.loadPath, '');
+            Ext.Loader.setPath(this.name, this.loadPath, '', this.bulkLoad);
         }
-
-        me.callParent(arguments);
 
         Ext.apply(me, {
             appControllers : (controllers.length) ? controllers : me.controllers,
@@ -154,7 +164,8 @@ Ext.define('Enlight.app.SubApplication', {
             cfg = Ext.isObject(loadMask) ? loadMask : {
                     msg    : me.loadingText,
                     msgCls : me.loadingCls,
-                    useMsg : me.loadingUseMsg
+                    useMsg : me.loadingUseMsg,
+                    delay  : me.loadDelay
                 };
 
             me.loadMask = loadMask = Ext.create('Ext.LoadMask', Ext.getBody(), cfg);

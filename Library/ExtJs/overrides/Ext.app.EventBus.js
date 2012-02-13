@@ -1,5 +1,5 @@
 /**
- * Enlight
+ * Enlight ExtJS
  *
  * LICENSE
  *
@@ -13,10 +13,12 @@
  *
  * @category   Enlight
  * @package    Enlight_ExtJs
- * @copyright  Copyright (c) 2011, shopware AG (http://www.shopware.de)
+ * @copyright  Copyright (c) 2012, Mitchell Simoens <mitchell.simoens@sencha.com>
+ * @copyright  Copyright (c) 2012, shopware AG (http://www.shopware.de)
  * @license    http://enlight.de/license     New BSD License
  * @version    $Id$
- * @author     Stephan P.
+ * @link       http://github.com/mitchellsimoens/SubAppDemo/
+ * @author     Mitchell Simoens <mitchell.simoens@sencha.com>
  * @author     $Author$
  */
 
@@ -24,9 +26,10 @@
  * Override the default ext application
  * to add our sub application functionality
  *
+ * {@link http://github.com/mitchellsimoens/SubAppDemo/}
+ *
  * @category   Enlight
  * @package    Enlight_ExtJs
- * @copyright  Copyright (c) 2011, shopware AG (http://www.shopware.de)
  * @license    http://enlight.de/license     New BSD License
  */
 Ext.override(Ext.app.EventBus, {
